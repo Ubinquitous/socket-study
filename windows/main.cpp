@@ -2,19 +2,6 @@
 #include <WinSock2.h>
 #pragma comment(lib, "ws2_32")
 
-int WSAStartup(WORD wVersionRequested, LPWSADATA lpWSAData);
-int WSACleanup(void);
-
-typedef struct WSAData {
-    WORD            sVersion;
-    WORD            wHighVersion;
-    char            szDescription[WSADESCRIPTION_LEN + 1];
-    char            szSystemStatus[WSASYS_STATUS_LEN + 1];
-    unsigned short  iMaxSockets;
-    unsigned short iMaxUdpDg;
-    char FAR* IpVendorInfo;
-} WSADATA, FAR* LPWSADATA;
-
 using namespace std;
 
 int main()
