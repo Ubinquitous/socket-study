@@ -3,6 +3,8 @@
 #include <netinet/in.h>
 #include <netdb.h>
 
+// macOS에는 WinSock이 없어 struct를 사용하지 않아도 연결할 수 있어요
+
 int main()
 {
     struct ifaddrs *ifaddr, *ifa;
