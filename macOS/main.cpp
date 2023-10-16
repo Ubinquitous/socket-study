@@ -1,24 +1,37 @@
 #include <iostream>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <unistd.h>
+#include <ifaddrs.h>
+#include <netinet/in.h>
+#include <netdb.h>
 
 int main()
 {
-    int sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd == -1) {
-        std::cerr << "Failed to create a socket" << std::endl;
-        exit(EXIT_FAILURE);
+    struct ifaddrs *ifaddr, *ifa;
+    if (getifaddrs(&ifaddr) == -1) {
+        std::cerr << "Failed to get network interface information" << std::endl;
+        return 1;
     }
 
-    std::cout << "Socket created successfully" << std::endl;
+    for (ifa = ifaddr; ifa != nullptr; ifa = ifa->ifa_next) {
+        if (ifa->ifa_addr == nullptr)
+            continue;
 
-    if (close(sockfd) == -1) {
-        std::cerr << "Failed to close the socket" << std::endl;
-        exit(EXIT_FAILURE);
+        int family = ifa->ifa_addr->sa_family;
+        if (family == AF_INET || family == AF_INET6) {
+            std::cout << "Interface: " << ifa->ifa_name << std::endl;
+
+            char host[NI_MAXHOST];
+            int ret = getnameinfo(ifa->ifa_addr, sizeof(struct sockaddr_in),
+                                  host, NI_MAXHOST, nullptr, 0, NI_NUMERICHOST);
+            if (ret != 0) {
+                std::cerr << "Failed to get IP address" << std::endl;
+                continue;
+            }
+
+            std::cout << "IP Address: " << host << std::endl;
+        }
     }
 
-    std::cout << "Socket closed successfully" << std::endl;
+    freeifaddrs(ifaddr);
 
     return 0;
 }
