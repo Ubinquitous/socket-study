@@ -17,10 +17,9 @@ struct in_addr GetDefaultMyIP()
     {
         if(ptr->h_addrtype == AF_INET)
         {
-            memcpy(&addr, ptr->h_addr_list[0], ptr->h_length);
+            memcpy(&addr, ptr->h_addr_list[1], ptr->h_length);
             break;
         }
-        
         ptr++;
     }
 
