@@ -27,7 +27,7 @@ struct in_addr GetDefaultMyIP()
    return addr;
 }
 
-int SetTCPServer(short pnum, int blog)
+int SetUDPServer(short pnum, int blog)
 {
     int sock;
     sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -107,7 +107,7 @@ void AcceptLoop(int sock)
 
 int main()
 {
-   int sock = SetTCPServer(PORT_NUM, BLOG_SIZE);
+   int sock = SetUDPServer(PORT_NUM, BLOG_SIZE);
    
    if(sock == -1)
    {
