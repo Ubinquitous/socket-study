@@ -8,8 +8,10 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include <pthread.h>
 
 #define MAX_PATH 300
 #define MAX_MSG_LEN 256
 #define PORT_NUM 10200
 #define BLOG_SIZE 5
+#define SERVER_IP 10

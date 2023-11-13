@@ -1,5 +1,4 @@
 #include "common.h"
-#include <pthread.h>
 
 struct in_addr GetDefaultMyIP()
 {
